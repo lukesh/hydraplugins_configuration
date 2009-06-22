@@ -4,7 +4,7 @@
 <compilerSourcePath/>
 <libraryPath defaultLinkType="1">
 <libraryPathEntry kind="4" path=""/>
-<libraryPathEntry kind="3" linkType="1" path="/HydraFramework_Core_0_3_1/bin/HydraFramework_Core_0_3_1.swc" useDefaultLinkType="false"/>
+<libraryPathEntry kind="3" linkType="1" path="/hydraframework_core/bin/hydraframework_core.swc" useDefaultLinkType="false"/>
 </libraryPath>
 <sourceAttachmentPath/>
 </compiler>
