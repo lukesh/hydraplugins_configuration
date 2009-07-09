@@ -46,6 +46,10 @@ package com.hydraframework.plugins.configuration {
 		public static function getInstance():ConfigurationManager {
 			return _instance;
 		}
+		
+		public static function get instance():ConfigurationManager {
+			return _instance;
+		}
 
 		public function ConfigurationManager() {
 			super(NAME);
