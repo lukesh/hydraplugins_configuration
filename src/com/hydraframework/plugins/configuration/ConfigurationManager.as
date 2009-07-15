@@ -34,6 +34,11 @@ package com.hydraframework.plugins.configuration {
 		public function get configuration():Object {
 			return _configuration;
 		}
+		
+		public static function get configuration():Object {
+			return ConfigurationManager.instance.configuration;
+		} 
+		
 		/**
 		 * @private
 		 * Cached instance of the ConfigurationManager.
