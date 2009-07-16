@@ -122,9 +122,7 @@ package com.hydraframework.plugins.configuration {
 		 * Parses a string value and returns the correct primitive.
 		 */
 		private function parseValue(value:String):* {
-			if(!isNaN(parseInt(value))) {
-				return parseInt(value);
-			} else if(value.toLowerCase() == "true") {
+			if(value.toLowerCase() == "true") {
 				return true;
 			} else if(value.toLowerCase() == "false") {
 				return false;
