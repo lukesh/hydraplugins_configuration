@@ -6,6 +6,7 @@ package com.hydraframework.plugins.configuration {
 	import com.hydraframework.core.mvc.events.Notification;
 	import com.hydraframework.core.mvc.events.Phase;
 	import com.hydraframework.core.mvc.patterns.plugin.Plugin;
+	import com.hydraframework.plugins.configuration.controller.ConfigureCommand;
 	
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
@@ -67,9 +68,14 @@ package com.hydraframework.plugins.configuration {
 		//  Public Methods
 		//
 		//--------------------------------------------------------------------------
+		
 		override public function initialize():void {
 			super.initialize();
-			configure();
+		}
+		
+		override public function preinitialize():void {
+			super.preinitialize();
+			this.facade.registerCommand(ConfigurationManager.CONFIGURE, ConfigureCommand);
 		}
 
 		/**
