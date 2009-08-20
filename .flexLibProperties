@@ -2,6 +2,7 @@
 <flexLibProperties version="1">
 <includeClasses>
 <classEntry path="com.hydraframework.plugins.configuration.ConfigurationManager"/>
+<classEntry path="com.hydraframework.plugins.configuration.controller.ConfigureCommand"/>
 </includeClasses>
 <includeResources/>
 <namespaceManifests/>

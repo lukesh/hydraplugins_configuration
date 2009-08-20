@@ -112,7 +112,7 @@ package com.hydraframework.plugins.configuration {
 		private function initObjects():void {
 			loader = new URLLoader();
 			configPointer = 0;
-			configList = ["config.local.xml", "config.xml"];
+			configList = ["config.xml", "config.local.xml"];
 		}
 
 		/**
@@ -152,10 +152,15 @@ package com.hydraframework.plugins.configuration {
 			for each(var node:XML in result.children()) {
 				this.configuration[node.name().toString()] = parseValue(node.toString());
 			}
-			this.sendNotification(new Notification(ConfigurationManager.CONFIGURE, this.configuration, Phase.RESPONSE, true));
-			this.sendNotification(new Notification(ConfigurationManager.CONFIGURATION_COMPLETE, this.configuration, Phase.RESPONSE, true));
-			loader.removeEventListener(Event.COMPLETE, handleXMLDataLoaded);
-			loader = null;
+			configPointer++;
+			if (configPointer < configList.length) {
+				loadNextConfigFile();
+			} else {
+				this.sendNotification(new Notification(ConfigurationManager.CONFIGURE, this.configuration, Phase.RESPONSE, true));
+				this.sendNotification(new Notification(ConfigurationManager.CONFIGURATION_COMPLETE, this.configuration, Phase.RESPONSE, true));
+				loader.removeEventListener(Event.COMPLETE, handleXMLDataLoaded);
+				loader = null;
+			}
 		}
 
 		private function handleXMLDataIOError(event:IOErrorEvent):void {
