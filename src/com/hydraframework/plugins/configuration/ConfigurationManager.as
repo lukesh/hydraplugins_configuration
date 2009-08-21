@@ -102,7 +102,10 @@ package com.hydraframework.plugins.configuration {
 			if (configPointer < configList.length) {
 				loader.load(new URLRequest(configList[configPointer]));
 			} else {
-				this.sendNotification(new Notification(ConfigurationManager.CONFIGURE, null, Phase.CANCEL, true));
+				this.sendNotification(new Notification(ConfigurationManager.CONFIGURE, this.configuration, Phase.RESPONSE, true));
+				this.sendNotification(new Notification(ConfigurationManager.CONFIGURATION_COMPLETE, this.configuration, Phase.RESPONSE, true));
+				loader.removeEventListener(Event.COMPLETE, handleXMLDataLoaded);
+				loader = null;
 			}
 		}
 
@@ -153,19 +156,13 @@ package com.hydraframework.plugins.configuration {
 				this.configuration[node.name().toString()] = parseValue(node.toString());
 			}
 			configPointer++;
-			if (configPointer < configList.length) {
-				loadNextConfigFile();
-			} else {
-				this.sendNotification(new Notification(ConfigurationManager.CONFIGURE, this.configuration, Phase.RESPONSE, true));
-				this.sendNotification(new Notification(ConfigurationManager.CONFIGURATION_COMPLETE, this.configuration, Phase.RESPONSE, true));
-				loader.removeEventListener(Event.COMPLETE, handleXMLDataLoaded);
-				loader = null;
-			}
+			loadNextConfigFile();
 		}
 
 		private function handleXMLDataIOError(event:IOErrorEvent):void {
 			configPointer++;
 			loadNextConfigFile();
 		}
+		
 	}
 }
