@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<flexLibProperties version="1">
-<includeClasses>
-<classEntry path="com.hydraframework.plugins.configuration.ConfigurationManager"/>
-<classEntry path="com.hydraframework.plugins.configuration.controller.ConfigureCommand"/>
-</includeClasses>
-<includeResources/>
-<namespaceManifests/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="false" version="1">
+  <includeClasses>
+    <classEntry path="com.hydraframework.plugins.configuration.ConfigurationManager"/>
+    <classEntry path="com.hydraframework.plugins.configuration.controller.ConfigureCommand"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
 </flexLibProperties>
