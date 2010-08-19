@@ -7,17 +7,18 @@ package com.hydraframework.plugins.configuration {
 	import com.hydraframework.core.mvc.events.Phase;
 	import com.hydraframework.core.mvc.patterns.plugin.Plugin;
 	import com.hydraframework.plugins.configuration.controller.ConfigureCommand;
-	
+
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 
 	public class ConfigurationManager extends Plugin {
+
 		public static const NAME:String = "ConfigurationManager";
 		public static const CONFIGURE:String = "plugins.configuration.configure";
 		public static const CONFIGURATION_COMPLETE:String = "plugins.configuration.configurationComplete";
-		
+
 		//--------------------------------------------------------------------------
 		//
 		//  Properties
@@ -35,11 +36,11 @@ package com.hydraframework.plugins.configuration {
 		public function get configuration():Object {
 			return _configuration;
 		}
-		
+
 		public static function get configuration():Object {
 			return ConfigurationManager.instance.configuration;
-		} 
-		
+		}
+
 		/**
 		 * @private
 		 * Cached instance of the ConfigurationManager.
@@ -52,7 +53,7 @@ package com.hydraframework.plugins.configuration {
 		public static function getInstance():ConfigurationManager {
 			return _instance;
 		}
-		
+
 		public static function get instance():ConfigurationManager {
 			return _instance;
 		}
@@ -62,17 +63,17 @@ package com.hydraframework.plugins.configuration {
 			initObjects();
 			initEvents();
 		}
-		
+
 		//--------------------------------------------------------------------------
 		//
 		//  Public Methods
 		//
 		//--------------------------------------------------------------------------
-		
+
 		override public function initialize():void {
 			super.initialize();
 		}
-		
+
 		override public function preinitialize():void {
 			super.preinitialize();
 			this.facade.registerCommand(ConfigurationManager.CONFIGURE, ConfigureCommand);
@@ -89,7 +90,7 @@ package com.hydraframework.plugins.configuration {
 			_configuration = {};
 			loadNextConfigFile();
 		}
-		
+
 		//--------------------------------------------------------------------------
 		//
 		//  Private Methods
@@ -114,8 +115,9 @@ package com.hydraframework.plugins.configuration {
 		 */
 		private function initObjects():void {
 			loader = new URLLoader();
+			var uniqueIdentifier:String = "?" + new Date().time; //forces the config.xml and config.local.xml configuration files to ALWAYS be loaded and never cached
 			configPointer = 0;
-			configList = ["config.xml", "config.local.xml"];
+			configList = [("config.xml" + uniqueIdentifier), ("config.local.xml" + uniqueIdentifier)];
 		}
 
 		/**
@@ -125,15 +127,15 @@ package com.hydraframework.plugins.configuration {
 			loader.addEventListener(Event.COMPLETE, handleXMLDataLoaded);
 			loader.addEventListener(IOErrorEvent.IO_ERROR, handleXMLDataIOError);
 		}
-		
+
 		/**
 		 * @private
 		 * Parses a string value and returns the correct primitive.
 		 */
 		private function parseValue(value:String):* {
-			if(value.toLowerCase() == "true") {
+			if (value.toLowerCase() == "true") {
 				return true;
-			} else if(value.toLowerCase() == "false") {
+			} else if (value.toLowerCase() == "false") {
 				return false;
 			}
 			return value;
@@ -152,7 +154,7 @@ package com.hydraframework.plugins.configuration {
 		 */
 		private function handleXMLDataLoaded(event:Event):void {
 			var result:XMLList = new XMLList(event.target.data);
-			for each(var node:XML in result.children()) {
+			for each (var node:XML in result.children()) {
 				this.configuration[node.name().toString()] = parseValue(node.toString());
 			}
 			configPointer++;
@@ -163,6 +165,6 @@ package com.hydraframework.plugins.configuration {
 			configPointer++;
 			loadNextConfigFile();
 		}
-		
+
 	}
 }
