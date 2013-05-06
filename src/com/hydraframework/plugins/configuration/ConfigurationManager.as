@@ -100,7 +100,18 @@ package com.hydraframework.plugins.configuration {
 		 */
 		private function loadNextConfigFile():void {
 			if (configPointer < configList.length) {
-				loader.load(new URLRequest(configList[configPointer]));
+				var url:String = configList[configPointer];
+				//check for relative paths to allow mapping directories
+				if(configPointer >= 1){
+					var configDomain:String = this.configuration["ConfigLocalPath"] as String;
+					if(configDomain != null && configDomain.length >= 1){
+						if(configDomain.lastIndexOf("/") != configDomain.length-1){
+							configDomain += "/";
+						}
+						url = configDomain + url;
+					}
+				}
+				loader.load(new URLRequest(url));
 			} else {
 				this.sendNotification(new Notification(ConfigurationManager.CONFIGURE, this.configuration, Phase.RESPONSE, true));
 				this.sendNotification(new Notification(ConfigurationManager.CONFIGURATION_COMPLETE, this.configuration, Phase.RESPONSE, true));
